@@ -319,7 +319,7 @@ class GPG(GPGBase):
                     sig_fh.close()
         return result
 
-    def import_keys(self, key_data):
+    def import_keys(self, key_data, passphrase=False):
         """
         Import the key_data into our keyring.
 
@@ -361,7 +361,7 @@ class GPG(GPGBase):
         result = self._result_map['import'](self)
         log.info('Importing: %r', key_data[:256])
         data = _make_binary_stream(key_data, self._encoding)
-        self._handle_io(['--import'], data, result, binary=True)
+        self._handle_io(['--import'], data, result, passphrase=passphrase, binary=True)
         data.close()
         return result
 
